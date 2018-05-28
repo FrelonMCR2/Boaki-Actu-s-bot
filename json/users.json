@@ -1,0 +1,35 @@
+[
+    {
+        "id": "178165057102938112",
+        "boaki": "Pokebal",
+        "wiloki": "Pokebal / Poke6 / Pokece1",
+        "boakiActu": "Pokebal",
+        "mentionWiloki": 1,
+        "mentionDiscord": 2,
+        "warn": 0,
+        "kick": 0,
+        "ban": 0
+    },
+    {
+        "id": "238969660765241355",
+        "boaki": "Wawaque",
+        "wiloki": "Wawaque",
+        "boakiActu": "undefined",
+        "mentionWiloki": 0,
+        "mentionDiscord": 2,
+        "warn": 0,
+        "kick": 0,
+        "ban": 0
+    },
+    {
+        "id": "288336619147231233",
+        "boaki": "undefined",
+        "wiloki": "undefined",
+        "boakiActu": "undefined",
+        "mentionWiloki": 0,
+        "mentionDiscord": 2,
+        "warn": 0,
+        "kick": 0,
+        "ban": 0
+    }
+]

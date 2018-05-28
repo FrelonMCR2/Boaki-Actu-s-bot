@@ -1,0 +1,16 @@
+{
+    "seconds": 30,
+    "random": true,
+    "games": [
+        "Boaki",
+        "KiPulKai 2",
+        "Wiloki",
+        "Boaki Actu"
+    ],
+    "gamesType": [
+        "PLAYING",
+        "PLAYING",
+        "WATCHING",
+        "WATCHING"
+    ]
+}
