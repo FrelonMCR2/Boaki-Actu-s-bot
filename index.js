@@ -236,7 +236,7 @@ bot.on("message", function (message) {
 			let cmds = "Le bot " + bot.user + " appartient et est entiérement développé par Boaki Actu | www.boakiactu.fr\nLa documentation est disponible avec la commande !doc.";
 			let args = message.content.split(" ");
 			if (args[1] == "admin" && admin(message.member)) {
-				cmds += "\n\nListe des commandes : \n\n:small_blue_diamond: !aide [prm]\n:small_blue_diamond: !report <arg-1> <arg-2>\n:small_blue_diamond: !ping\n:small_orange_diamond: !setgame [<prm> <arg-1> [<arg-2>]]\n:small_orange_diamond: !say [prm] <arg>\n:small_orange_diamond: !file [prm] <arg>\n:small_orange_diamond: !ver [prm] <arg-2> <arg-3>\n:small_orange_diamond: !profil <arg-1> [<prm> <arg-2>]\n:small_orange_diamond: !documentation\n:small_orange_diamond: !log [[<arg-1>] [prm] [arg]]\n:small_orange_diamond: !warn <arg-1> <arg-2>\n:small_orange_diamond: !article [prm] <arg-1> <arg-2>\n:small_orange_diamond: !sanction <arg>\n:small_orange_diamond: !mentionWiloki [<prm> <arg>]\n:small_orange_diamond: !purge <arg-1> [arg-2]";
+				cmds += "\n\nListe des commandes : \n\n:small_blue_diamond: !aide [prm]\n:small_blue_diamond: !report <arg-1> <arg-2>\n:small_blue_diamond: !ping\n:small_orange_diamond: !setgame [<prm> <arg-1> [<arg-2>]]\n:small_orange_diamond: !say [prm] <arg>\n:small_orange_diamond: !file [prm] <arg>\n:small_orange_diamond: !ver [prm] <arg-2> <arg-3>\n:small_orange_diamond: !profil <arg-1> [<prm> <arg-2>]\n:small_orange_diamond: !documentation\n:small_orange_diamond: !log <arg>\n:small_orange_diamond: !warn <arg-1> <arg-2>\n:small_orange_diamond: !article [prm] <arg-1> <arg-2>\n:small_orange_diamond: !sanction <arg>\n:small_orange_diamond: !mentionWiloki [<prm> <arg>]\n:small_orange_diamond: !purge <arg-1> [arg-2]";
 				devBot.send(message.author + ", " + cmds);
 			}
 			else {
@@ -250,11 +250,7 @@ bot.on("message", function (message) {
 		}
 		else if (message.content === "!ping") {
 			message.delete();
-			let channelSetgame = message.guild.channels.get("464047656013135882");
-			channelSetgame.fetchMessage(channelSetgame.lastMessageID).then(function(lastMessage) {
-				message.reply(lastMessage.content);
-			});
-			console.log(JSON.stringify(new Date()).split('"')[1].split("T")[0]);
+			message.reply("Pong !");
 		}
 		else if (message.content.startsWith("!log") && admin(message.member)) {
 			message.delete();
