@@ -868,4 +868,4 @@ bot.on("message", function (message) {
 	}
 });
 
-bot.login("Mzk5NDg5NDc0MjA1MzE5MTc5.Dfh6CA.NmujdIq_d-D1-irVilbXXIBpjEE");
+bot.login(process.env.TOKEN);
