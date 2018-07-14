@@ -166,7 +166,7 @@ bot.on('ready', function () {
 });
 
 bot.on("guildMemberAdd", function (member) {
-	let channelUsers = message.guild.channels.get("465154316639010856");
+	let channelUsers = bot.guilds.find('id', "398872980404437013").channels.get("465154316639010856");
 	channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
 		Users = JSON.parse(Users);
 		log("newMember", member);
