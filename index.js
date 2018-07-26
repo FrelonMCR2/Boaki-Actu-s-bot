@@ -171,20 +171,16 @@ bot.on("guildMemberAdd", function (member) {
 		let channelUsers = bot.guilds.find('id', "398872980404437013").channels.get(usersChannelsId[i]);
 		channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
 			let UsersString = Users;
-			console.log("vérif4");
 			Users = JSON.parse(Users);
 			let edit = false;
-			console.log(Users);
 			for (let i = 0; i < Users.length; i++) {
 				if (Users[i].id === member.id) {
-					console.log("vérif");
 					edit = true;
 					log("newMember", member);
 					i = 150;
 				}
 			}
 			if (edit !== true) {
-				console.log("vérif2");
 				if (UsersString.content.length < 1600) {
 					member.createDM().then(function (channel) {
 						return channel.send("Bienvenue " + member.displayName + " sur le discord officiel de Boaki Actu !\n\n\nRégles du serveur :\n\n:small_blue_diamond:  Nous tenons à une ambiance de paix au sein de cette communauté. Pour cela, il est interdit de critiquer ou d'insulter une personne pour sa nationalité, ses origines, sa religion, son orientation sexuelle, son genre, ses choix de vie, sa classe sociale, ses opinions politiques, ses goûts personnels, son poids, sa taille ou sa santé (physique ou mentale). Les provocations, diffamations, moqueries et harcèlements sont interdits.\n\n:small_orange_diamond:  Le respect est l'une des valeurs principales de cette communautée. Veuillez donc respecter autruis, que ce soit membre ou staff.\n:small_orange_diamond: Pas de spam, pas d'abus de majuscules. Essayez d'écrire sans faire trop de fautes d'orthographe.\n:small_orange_diamond: Les images pornographiques et violentes sont interdites.\n\n:large_blue_diamond:  Rôle de la modération :\n:one:  Accueillir les nouvelles et les nouveaux à l'arrivée.\n:two:  Sanctionner les personnes qui ne respectent pas le règlement\n:three:  Transmettre à @FrelonMCR2 (alias Pokebal) les suggestions des membres.\n:four:  Assister @FrelonMCR2 dans certaines décisions.\n:arrow_right:  D'autres responsabilités qu'il n'est pas nécessaire de citer.\n\n:small_orange_diamond: Merci d'éviter de couper la parole aux autres dans les salons vocaux. Mis à part les salons #fun et Salon du fun (Vocal), le sujet des autres salons doit être basé autour des différents univers développés par Gibcom Multimedia.\n\n:small_blue_diamond:  Evidemment, le non-respect des règles entrainera des sanctions.");
@@ -207,13 +203,10 @@ bot.on("guildMemberAdd", function (member) {
 				}
 			}
 		});
-		console.log("vérif3");
 		let channelLog = bot.guilds.find('id', "398872980404437013").channels.get("465499769020874753");
 		if (channelLog.fetchMessage(channelLog.lastMessageID).then(function(msg) {
-			console.log(msg.content.split("] ")[1].split(" :")[0]);
 			if (msg.content.split("] ")[1].split(" :")[0] === "NEW MEMBER") {
 				i = 150;
-				console.log("vérif5");
 				return true
 			}
 		})) {
@@ -877,4 +870,5 @@ bot.on("message", function (message) {
 		}
 	}
 });
+
 bot.login(process.env.TOKEN);
