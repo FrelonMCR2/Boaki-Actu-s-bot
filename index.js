@@ -7,6 +7,7 @@ const fs = require("fs");
 var currentGame = 0;
 var random = 0;
 var pinMessage = false;
+var usersChannelsId = ["465154316639010856", "468689435928690688", "469413510518931456", "469413529552683008", "469413544690057227", "469413561001705475", "469413576839528458", "469413592467505173", "469413606685933578", "469413620237729794"];
 
 function admin(member) {
 	if (member.roles.find("name", "Administrateur") || member.roles.find("name", "Modérateur")) {
@@ -166,36 +167,59 @@ bot.on('ready', function () {
 });
 
 bot.on("guildMemberAdd", function (member) {
-	let channelUsers = bot.guilds.find('id', "398872980404437013").channels.get("465154316639010856");
-	channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
-		Users = JSON.parse(Users);
-		log("newMember", member);
-		member.createDM().then(function (channel) {
-			return channel.send("Bienvenue " + member.displayName + " sur le discord officiel de Boaki Actu !\n\n\nRégles du serveur :\n\n:small_blue_diamond:  Nous tenons à une ambiance de paix au sein de cette communauté. Pour cela, il est interdit de critiquer ou d'insulter une personne pour sa nationalité, ses origines, sa religion, son orientation sexuelle, son genre, ses choix de vie, sa classe sociale, ses opinions politiques, ses goûts personnels, son poids, sa taille ou sa santé (physique ou mentale). Les provocations, diffamations, moqueries et harcèlements sont interdits.\n\n:small_orange_diamond:  Le respect est l'une des valeurs principales de cette communautée. Veuillez donc respecter autruis, que ce soit membre ou staff.\n:small_orange_diamond: Pas de spam, pas d'abus de majuscules. Essayez d'écrire sans faire trop de fautes d'orthographe.\n:small_orange_diamond: Les images pornographiques et violentes sont interdites.\n\n:large_blue_diamond:  Rôle de la modération :\n:one:  Accueillir les nouvelles et les nouveaux à l'arrivée.\n:two:  Sanctionner les personnes qui ne respectent pas le règlement\n:three:  Transmettre à @FrelonMCR2 (alias Pokebal) les suggestions des membres.\n:four:  Assister @FrelonMCR2 dans certaines décisions.\n:arrow_right:  D'autres responsabilités qu'il n'est pas nécessaire de citer.\n\n:small_orange_diamond: Merci d'éviter de couper la parole aux autres dans les salons vocaux. Mis à part les salons #fun et Salon du fun (Vocal), le sujet des autres salons doit être basé autour des différents univers développés par Gibcom Multimedia.\n\n:small_blue_diamond:  Evidemment, le non-respect des règles entrainera des sanctions.");
-		});
-		var profile = {
-			id: member.id,
-			boaki: "undefined",
-			wiloki: "undefined",
-			boakiActu: "undefined",
-			mentionWiloki: 0,
-			mentionDiscord: 0,
-			warn: 0,
-			kick: 0,
-			ban: 0
-		};
-		let edit = false;
-		for (let i = 0;i < Users.length; i++) {
-			if (Users[i].id === member.id) {
-				edit = true;
+	for (let i = 0; i < usersChannelsId.length; i++) {
+		let channelUsers = bot.guilds.find('id', "398872980404437013").channels.get(usersChannelsId[i]);
+		channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
+			let UsersString = Users;
+			console.log("vérif4");
+			Users = JSON.parse(Users);
+			let edit = false;
+			console.log(Users);
+			for (let i = 0; i < Users.length; i++) {
+				if (Users[i].id === member.id) {
+					console.log("vérif");
+					edit = true;
+					log("newMember", member);
+					i = 150;
+				}
 			}
+			if (edit !== true) {
+				console.log("vérif2");
+				if (UsersString.content.length < 1600) {
+					member.createDM().then(function (channel) {
+						return channel.send("Bienvenue " + member.displayName + " sur le discord officiel de Boaki Actu !\n\n\nRégles du serveur :\n\n:small_blue_diamond:  Nous tenons à une ambiance de paix au sein de cette communauté. Pour cela, il est interdit de critiquer ou d'insulter une personne pour sa nationalité, ses origines, sa religion, son orientation sexuelle, son genre, ses choix de vie, sa classe sociale, ses opinions politiques, ses goûts personnels, son poids, sa taille ou sa santé (physique ou mentale). Les provocations, diffamations, moqueries et harcèlements sont interdits.\n\n:small_orange_diamond:  Le respect est l'une des valeurs principales de cette communautée. Veuillez donc respecter autruis, que ce soit membre ou staff.\n:small_orange_diamond: Pas de spam, pas d'abus de majuscules. Essayez d'écrire sans faire trop de fautes d'orthographe.\n:small_orange_diamond: Les images pornographiques et violentes sont interdites.\n\n:large_blue_diamond:  Rôle de la modération :\n:one:  Accueillir les nouvelles et les nouveaux à l'arrivée.\n:two:  Sanctionner les personnes qui ne respectent pas le règlement\n:three:  Transmettre à @FrelonMCR2 (alias Pokebal) les suggestions des membres.\n:four:  Assister @FrelonMCR2 dans certaines décisions.\n:arrow_right:  D'autres responsabilités qu'il n'est pas nécessaire de citer.\n\n:small_orange_diamond: Merci d'éviter de couper la parole aux autres dans les salons vocaux. Mis à part les salons #fun et Salon du fun (Vocal), le sujet des autres salons doit être basé autour des différents univers développés par Gibcom Multimedia.\n\n:small_blue_diamond:  Evidemment, le non-respect des règles entrainera des sanctions.");
+					});
+					var profile = {
+						id: member.id,
+						boaki: "undefined",
+						wiloki: "undefined",
+						boakiActu: "undefined",
+						mentionWiloki: 0,
+						mentionDiscord: 0,
+						warn: 0,
+						kick: 0,
+						ban: 0
+					};
+					Users.push(profile);
+					jsonUsers = JSON.stringify(Users, null, 4);
+					channelUsers.send(jsonUsers);
+					log("newMember", member);
+				}
+			}
+		});
+		console.log("vérif3");
+		let channelLog = bot.guilds.find('id', "398872980404437013").channels.get("465499769020874753");
+		if (channelLog.fetchMessage(channelLog.lastMessageID).then(function(msg) {
+			console.log(msg.content.split("] ")[1].split(" :")[0]);
+			if (msg.content.split("] ")[1].split(" :")[0] === "NEW MEMBER") {
+				i = 150;
+				console.log("vérif5");
+				return true
+			}
+		})) {
+			i = 150;
 		}
-		if (edit !== true) {
-			Users.push(profile);
-		}
-		jsonUsers = JSON.stringify(Users, null, 4);
-		channelUsers.send(jsonUsers);
-	});
+	}
 });
 
 bot.on("guildMemberRemove", function (member) {
@@ -218,7 +242,7 @@ bot.on("message", function (message) {
 	if (message.guild !== null) {
 		let devBot = message.guild.channels.get("399534429577543680");
 		if (message.author.id === "399489474205319179") {
-			if (message.channel.id !== "465499769020874753" && message.channel.id !== "465154316639010856" && message.channel.id !== "465153382231834625" && message.channel.id !== "464047656013135882") {
+			if (message.channel.id !== "465499769020874753" && message.channel.id !== "465154316639010856" && message.channel.id !== "465153382231834625" && message.channel.id !== "464047656013135882" && message.channel.id !== "471230696539553792" && message.channel.id !== "468689435928690688" && message.channel.id !== "469413510518931456" && message.channel.id !== "469413529552683008" && message.channel.id !== "469413544690057227" && message.channel.id !== "469413561001705475" && message.channel.id !== "469413576839528458" && message.channel.id !== "469413592467505173" && message.channel.id !== "469413606685933578" && message.channel.id !== "469413620237729794") {
 				log("botMessage", message.member, message);
 				if (pinMessage) {
 					message.pin();
@@ -227,7 +251,7 @@ bot.on("message", function (message) {
 			}
 		}
 		else {
-			if (message.channel.id !== "465499769020874753" && message.channel.id !== "465154316639010856" && message.channel.id !== "465153382231834625" && message.channel.id !== "464047656013135882") {
+			if (message.channel.id !== "465499769020874753" && message.channel.id !== "465154316639010856" && message.channel.id !== "465153382231834625" && message.channel.id !== "464047656013135882" && message.channel.id !== "471230696539553792" && message.channel.id !== "468689435928690688" && message.channel.id !== "469413510518931456" && message.channel.id !== "469413529552683008" && message.channel.id !== "469413544690057227" && message.channel.id !== "469413561001705475" && message.channel.id !== "469413576839528458" && message.channel.id !== "469413592467505173" && message.channel.id !== "469413606685933578" && message.channel.id !== "469413620237729794") {
 				log("message", message.member, message);
 			}			
 		}	
@@ -458,88 +482,92 @@ bot.on("message", function (message) {
 					let channelWarns = message.guild.channels.get("465153382231834625");
 					channelWarns.fetchMessage(channelWarns.lastMessageID).then(function(Warns) {
 						Warns = JSON.parse(Warns);
-						let channelUsers = message.guild.channels.get("465154316639010856");
-						channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
-							Users = JSON.parse(Users);
-							let nbUser = 0;
-							for (let i = 0;i < Users.length; i++) {
-								if (Users[i].id === idMention) {
-									Users[i].warn += 1;
-									nbUser = i;
-								}
-							}
-							let type = "warn";
-							if (Users[nbUser].warn === 3 || Users[nbUser].warn === 6 || Users[nbUser].warn === 9) {
-								type = "kick";
-								Users[nbUser].kick += 1;
-								if (Users[nbUser].kick === 3 || Users[nbUser].kick === 6) {
-									type = "banTemp";
-									Users[nbUser].ban += 1;
-									if (Users[nbUser].ban === 2) {
-										type = "banDef";
-										Users[nbUser].ban = "Définitif";
+						for (let i = 0; i < usersChannelsId.length; i++) {
+							let channelUsers = bot.guilds.find('id', "398872980404437013").channels.get(usersChannelsId[i]);
+							channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
+								Users = JSON.parse(Users);
+								let nbUser = -1;
+								for (let i = 0; i < Users.length; i++) {
+									if (Users[i].id === idMention) {
+										Users[i].warn += 1;
+										nbUser = i;
 									}
 								}
-							}
-							let date = new Date;
-							date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " à " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-							var warn = {
-								id: idMention,
-								date: date,
-								reason: args,
-								author: message.author.id,
-								type: type
-							};
-							Warns.push(warn);
-							Users = JSON.stringify(Users, null, 4);
-							channelUsers.send(Users);
-							Warns = JSON.stringify(Warns, null, 4);
-							channelWarns.send(Warns);
-							bot.fetchUser(warn.id).then(function(targetUser) {
-							    message.guild.fetchMember(targetUser).then( function(targetMember) {
-							    	let embedWarn = new Discord.RichEmbed();
-							    	embedWarn.description = "\nMembre : " + targetMember.displayName + "\nSanction : ";
-									embedWarn.color = 0xFF0000;
-									embedWarn.title = ":small_red_triangle: SANCTION";
-									embedWarn.setThumbnail(url=targetUser.avatarURL);
-									switch (type) {
-										case "warn":
-											embedWarn.description += "Avertissement";
-											break;
-										case "kick":
-											embedWarn.description += "Exclusion";
-											break;
-										case "banTemp":
-											embedWarn.description += "Bannissement temporaire (1 semaine)";
-											break;
-										case "banDef":
-											embedWarn.description += "Bannissement définitif";
-											break;
+								if (nbUser !== -1) {
+									let type = "warn";
+									if (Users[nbUser].warn === 3 || Users[nbUser].warn === 6 || Users[nbUser].warn === 9) {
+										type = "kick";
+										Users[nbUser].kick += 1;
+										if (Users[nbUser].kick === 3 || Users[nbUser].kick === 6) {
+											type = "banTemp";
+											Users[nbUser].ban += 1;
+											if (Users[nbUser].ban === 2) {
+												type = "banDef";
+												Users[nbUser].ban = "Définitif";
+											}
+										}
 									}
-									bot.fetchUser(warn.author).then(function(authorUser) {
-							    		message.guild.fetchMember(authorUser).then( function(authorMember) {
-											embedWarn.description += "\nDate : " + warn.date + "\nRaison : " + warn.reason + "\nAuteur : " + authorMember.displayName;
-											message.channel.send({embed: embedWarn});
-											targetMember.createDM().then(function (channel) {
-												return channel.send({embed: embedWarn});
-											}).then(function() {
-												switch (type) {
+									let date = new Date;
+									date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " à " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+									var warn = {
+										id: idMention,
+										date: date,
+										reason: args,
+										author: message.author.id,
+										type: type
+									};
+									Warns.push(warn);
+									Users = JSON.stringify(Users, null, 4);
+									channelUsers.send(Users);
+									Warns = JSON.stringify(Warns, null, 4);
+									channelWarns.send(Warns);
+									bot.fetchUser(warn.id).then(function(targetUser) {
+									    message.guild.fetchMember(targetUser).then( function(targetMember) {
+									    	let embedWarn = new Discord.RichEmbed();
+									    	embedWarn.description = "\nMembre : " + targetMember.displayName + "\nSanction : ";
+											embedWarn.color = 0xFF0000;
+											embedWarn.title = ":small_red_triangle: SANCTION";
+											embedWarn.setThumbnail(url=targetUser.avatarURL);
+											switch (type) {
+												case "warn":
+													embedWarn.description += "Avertissement";
+													break;
 												case "kick":
-													targetMember.kick(warn.reason);
+													embedWarn.description += "Exclusion";
 													break;
 												case "banTemp":
-													targetMember.ban({days: 7, reason: warn.reason});
+													embedWarn.description += "Bannissement temporaire (1 semaine)";
 													break;
 												case "banDef":
-													targetMember.ban(warn.reason);
+													embedWarn.description += "Bannissement définitif";
 													break;
-												}
+											}
+											bot.fetchUser(warn.author).then(function(authorUser) {
+									    		message.guild.fetchMember(authorUser).then( function(authorMember) {
+													embedWarn.description += "\nDate : " + warn.date + "\nRaison : " + warn.reason + "\nAuteur : " + authorMember.displayName;
+													message.channel.send({embed: embedWarn});
+													targetMember.createDM().then(function (channel) {
+														return channel.send({embed: embedWarn});
+													}).then(function() {
+														switch (type) {
+														case "kick":
+															targetMember.kick(warn.reason);
+															break;
+														case "banTemp":
+															targetMember.ban({days: 7, reason: warn.reason});
+															break;
+														case "banDef":
+															targetMember.ban(warn.reason);
+															break;
+														}
+													});
+												});
 											});
-										});
+									    });
 									});
-							    });
+								}
 							});
-						});
+						}
 					});				
 				}
 				else {
@@ -559,133 +587,117 @@ bot.on("message", function (message) {
 				user = message.mentions.users.first().id;
 			}
 			let embedUser = new Discord.RichEmbed();
-			let channelUsers = message.guild.channels.get("465154316639010856");
-			channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
-				Users = JSON.parse(Users);
-				if (args[0] === "edit") {
-					args.shift();
-					for (let i = 0;i < Users.length; i++) {
-						if (Users[i].id === message.member.id) {
-							switch (args[0].toLowerCase()) {
-								case "boaki":
-									args.shift();
-									Users[i].boaki = args.join(" ");;
-									message.reply("Votre pseudo Boaki a été modifié vers : " + Users[i].boaki)
-									break;
-								case "wiloki":
-									args.shift();
-									Users[i].wiloki = args.join(" ");;
-									message.reply("Votre pseudo Wiloki a été modifié vers : " + Users[i].wiloki)
-									break;
-								case "boakiactu":
-									args.shift();
-									Users[i].boakiActu = args.join(" ");
-									message.reply("Votre pseudo Boaki Actu a été modifié vers : " + Users[i].boakiActu + "\nUn lien est désormais disponible vers votre profil Boaki Actu. Si le lien est incorrect, vérifiez que le pseudo saisi est bien identique à celui de votre profil Boaki Actu.");
-									break;
-								default:
-									message.reply("Les informations modifiables sont : boaki, wiloki et boakiActu");
-									break;
+			for (let i = 0; i < usersChannelsId.length; i++) {
+				let channelUsers = bot.guilds.find('id', "398872980404437013").channels.get(usersChannelsId[i]);
+				channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
+					Users = JSON.parse(Users);
+					if (args[0] === "edit") {
+						args.shift();
+						let check = false;
+						for (let i = 0;i < Users.length; i++) {
+							if (Users[i].id === message.member.id) {
+								switch (args[0].toLowerCase()) {
+									case "boaki":
+										args.shift();
+										Users[i].boaki = args.join(" ");;
+										message.reply("Votre pseudo Boaki a été modifié vers : " + Users[i].boaki)
+										break;
+									case "wiloki":
+										args.shift();
+										Users[i].wiloki = args.join(" ");;
+										message.reply("Votre pseudo Wiloki a été modifié vers : " + Users[i].wiloki)
+										break;
+									case "boakiactu":
+										args.shift();
+										Users[i].boakiActu = args.join(" ");
+										message.reply("Votre pseudo Boaki Actu a été modifié vers : " + Users[i].boakiActu + "\nUn lien est désormais disponible vers votre profil Boaki Actu. Si le lien est incorrect, vérifiez que le pseudo saisi est bien identique à celui de votre profil Boaki Actu.");
+										break;
+									default:
+										message.reply("Les informations modifiables sont : boaki, wiloki et boakiActu");
+										break;
+								}
 							}
-						} 
+							else {
+								check = true;
+								i = 150;
+							}
+						}jsonUsers = JSON.stringify(Users, null, 4);
+						channelUsers.send(jsonUsers);
+						if (check = true) {
+							jsonUsers = JSON.stringify(Users, null, 4);
+							channelUsers.send(jsonUsers);
+						}						
 					}
-					jsonUsers = JSON.stringify(Users, null, 4);
-					channelUsers.send(jsonUsers);
-				}
-				else if (args[0] === "reset" && admin(message.member)) {
-					message.reply("Profil rénitialisé");
-					var profile = {
-						id: message.member.id,
-						boaki: "undefined",
-						wiloki: "undefined",
-						boakiActu: "undefined",
-						mentionWiloki: 0,
-						mentionDiscord: 0,
-						warn: 0,
-						kick: 0,
-						ban: 0
-					};
-					let edit = false;
-					for (let i = 0;i < Users.length; i++) {
-						if (Users[i].id === message.member.id) {
-							Users[i] = profile;
-							edit = true;
-						}
-					}
-					if (edit !== true) {
-						Users.push(profile);
-					}
-					jsonUsers = JSON.stringify(Users, null, 4);
-					channelUsers.send(jsonUsers);
-				}
-				else {
-					for (let i = 0;i < Users.length; i++) {
-						if (Users[i].id === user) {
-							embedUser.color = 0xFF4300;
-							bot.fetchUser(Users[i].id).then(function(user) {
-								message.guild.fetchMember(user).then( function(member) {
-									let avatarURL = user.avatarURL;
-									if (avatarURL === null) {
-										avatarURL = "https://static.blog4ever.com/2010/07/424747/img" + (Math.floor(Math.random() * Math.floor(6)) + 1) + ".png";
-									}
-									embedUser.setThumbnail(url=avatarURL);
-									embedUser.title = "Utilisateur - " + member.displayName;
-									let date = member.joinedAt;
-									date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " à " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-									embedUser.description = ":small_blue_diamond: Arrivée : " + date;
-									if (Users[i].boaki !== "undefined") {
-										embedUser.description += "\n:small_blue_diamond: Pseudo Boaki : " + Users[i].boaki;
-									}
-									if (Users[i].wiloki !== "undefined") {
-										embedUser.description += "\n:small_blue_diamond: Pseudo Wiloki : " + Users[i].wiloki;
-									}
-									if (Users[i].boakiActu !== "undefined") {
-										embedUser.description += "\n:small_blue_diamond: Pseudo Boaki Actu : " + Users[i].boakiActu;
-										embedUser.url = "http://www.boakiactu.fr/membres/" + Users[i].boakiActu;
-									}
-									if (Users[i].warn > 0) {
-										embedUser.description += "\n:small_red_triangle: Avertissement : " + Users[i].warn;
-									}
-									if (Users[i].kick > 0) {
-										embedUser.description += "\n:small_red_triangle: Exclusion : " + Users[i].kick;
-									}
-									if (Users[i].ban > 0 || Users[i].ban === "Définitif") {
-										embedUser.description += "\n:small_red_triangle: Bannissement : " + Users[i].ban;
-									}
-									switch (Users[i].mentionWiloki) {
-										case 1:
-											embedUser.description += "\n:small_orange_diamond: Top #1 Wiloki !";
-											break;
-										case 2:
-											embedUser.description += "\n:small_orange_diamond: Top #5 Wiloki !";
-											break;
-										case 3:
-											embedUser.description += "\n:small_orange_diamond: Top #10 Wiloki !";
-											break;
-										case 4:
-											embedUser.description += "\n:small_orange_diamond: Top #25 Wiloki !";
-											break;
-										case 5:
-											embedUser.description += "\n:small_orange_diamond: Top #50 Wiloki !";
-											break;
-										case 6:
-											embedUser.description += "\n:small_orange_diamond: Top #100 Wiloki !";
-											break;
-									}
-									switch (Users[i].mentionDiscord) {
-										case 1:
-											embedUser.description += "\n:small_orange_diamond: Administrateur discord !";
-											break;
-										case 2:
-											embedUser.description += "\n:small_orange_diamond: Modérateur discord !";
-											break;
-									}
-									message.channel.send({embed: embedUser});
+					else {
+						for (let i = 0;i < Users.length; i++) {
+							if (Users[i].id === user) {
+								embedUser.color = 0xFF4300;
+								bot.fetchUser(Users[i].id).then(function(user) {
+									message.guild.fetchMember(user).then( function(member) {
+										let avatarURL = user.avatarURL;
+										if (avatarURL === null) {
+											avatarURL = "https://static.blog4ever.com/2010/07/424747/img" + (Math.floor(Math.random() * Math.floor(6)) + 1) + ".png";
+										}
+										embedUser.setThumbnail(url=avatarURL);
+										embedUser.title = "Utilisateur - " + member.displayName;
+										let date = member.joinedAt;
+										date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " à " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+										embedUser.description = ":small_blue_diamond: Arrivée : " + date;
+										if (Users[i].boaki !== "undefined") {
+											embedUser.description += "\n:small_blue_diamond: Pseudo Boaki : " + Users[i].boaki;
+										}
+										if (Users[i].wiloki !== "undefined") {
+											embedUser.description += "\n:small_blue_diamond: Pseudo Wiloki : " + Users[i].wiloki;
+										}
+										if (Users[i].boakiActu !== "undefined") {
+											embedUser.description += "\n:small_blue_diamond: Pseudo Boaki Actu : " + Users[i].boakiActu;
+											embedUser.url = "http://www.boakiactu.fr/membres/" + Users[i].boakiActu;
+										}
+										if (Users[i].warn > 0) {
+											embedUser.description += "\n:small_red_triangle: Avertissement : " + Users[i].warn;
+										}
+										if (Users[i].kick > 0) {
+											embedUser.description += "\n:small_red_triangle: Exclusion : " + Users[i].kick;
+										}
+										if (Users[i].ban > 0 || Users[i].ban === "Définitif") {
+											embedUser.description += "\n:small_red_triangle: Bannissement : " + Users[i].ban;
+										}
+										switch (Users[i].mentionWiloki) {
+											case 1:
+												embedUser.description += "\n:small_orange_diamond: Top #1 Wiloki !";
+												break;
+											case 2:
+												embedUser.description += "\n:small_orange_diamond: Top #5 Wiloki !";
+												break;
+											case 3:
+												embedUser.description += "\n:small_orange_diamond: Top #10 Wiloki !";
+												break;
+											case 4:
+												embedUser.description += "\n:small_orange_diamond: Top #25 Wiloki !";
+												break;
+											case 5:
+												embedUser.description += "\n:small_orange_diamond: Top #50 Wiloki !";
+												break;
+											case 6:
+												embedUser.description += "\n:small_orange_diamond: Top #100 Wiloki !";
+												break;
+										}
+										switch (Users[i].mentionDiscord) {
+											case 1:
+												embedUser.description += "\n:small_orange_diamond: Administrateur discord !";
+												break;
+											case 2:
+												embedUser.description += "\n:small_orange_diamond: Modérateur discord !";
+												break;
+										}
+										message.channel.send({embed: embedUser});
+									});
 								});
-							});
+							}
 						}
 					}
-				}
-			});			
+				});
+			}		
 		}
 		else if ((message.content === "!documentation" || message.content === "!doc") && admin(message.member)) {
 			message.delete();
@@ -836,18 +848,20 @@ bot.on("message", function (message) {
 					let user = message.mentions.members.first();
 					args.shift();
 					if (args[0] >= 0 && args[0] < 7) {
-						let channelUsers = message.guild.channels.get("465154316639010856");
-						channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
-							Users = JSON.parse(Users);
-							for (let i = 0;i < Users.length; i++) {
-								if (Users[i].id === user.id) {
-									Users[i].mentionWiloki = Number(args[0]);
-									jsonUsers = JSON.stringify(Users, null, 4);
-									channelUsers.send(jsonUsers);
-									devBot.send(message.author + ", la mention Wiloki de " + user + " a bien été défini sur " + args[0]);
-								}
-							}
-						});
+						for (let i = 0; i < usersChannelsId.length; i++) {
+							let channelUsers = bot.guilds.find('id', "398872980404437013").channels.get(usersChannelsId[i]);
+							channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
+								Users = JSON.parse(Users);
+								for (let i = 0; i < Users.length; i++) {
+									if (Users[i].id === user.id) {
+										Users[i].mentionWiloki = Number(args[0]);
+										jsonUsers = JSON.stringify(Users, null, 4);
+										channelUsers.send(jsonUsers);
+										devBot.send(message.author + ", la mention Wiloki de " + user + " a bien été défini sur " + args[0]);
+									}
+								}	
+							});
+						}
 					}
 					else {
 						devBot.send(message.author + ", Synthaxe : !mentionWiloki [<prm> <arg>]");
@@ -863,5 +877,4 @@ bot.on("message", function (message) {
 		}
 	}
 });
-
 bot.login(process.env.TOKEN);
