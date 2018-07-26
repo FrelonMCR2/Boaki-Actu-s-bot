@@ -580,43 +580,53 @@ bot.on("message", function (message) {
 				user = message.mentions.users.first().id;
 			}
 			let embedUser = new Discord.RichEmbed();
+			let pass = false;
+			if (args[0] === "edit") {
+				pass = true;
+			}
+			let argsSave3 = args[1];
+			let argsSave = args;
+			argsSave.shift();
+			let argsSave2 = argsSave;
+			argsSave2.shift();
+			argsSave2 = argsSave2.join(" ");
 			for (let i = 0; i < usersChannelsId.length; i++) {
 				let channelUsers = bot.guilds.find('id', "398872980404437013").channels.get(usersChannelsId[i]);
 				channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
 					Users = JSON.parse(Users);
-					if (args[0] === "edit") {
+					console.log(args[0]);
+					if (args[0] === "edit" || pass == true) {
+						pass = true;
 						args.shift();
 						let check = false;
+						console.log(Users);
 						for (let i = 0;i < Users.length; i++) {
 							if (Users[i].id === message.member.id) {
-								switch (args[0].toLowerCase()) {
+								check = true;
+								switch (argsSave3.toLowerCase()) {
 									case "boaki":
 										args.shift();
-										Users[i].boaki = args.join(" ");;
+										Users[i].boaki = argsSave2;
 										message.reply("Votre pseudo Boaki a été modifié vers : " + Users[i].boaki)
 										break;
 									case "wiloki":
 										args.shift();
-										Users[i].wiloki = args.join(" ");;
+										Users[i].wiloki = argsSave2;
 										message.reply("Votre pseudo Wiloki a été modifié vers : " + Users[i].wiloki)
 										break;
 									case "boakiactu":
 										args.shift();
-										Users[i].boakiActu = args.join(" ");
+										Users[i].boakiActu = argsSave2;
 										message.reply("Votre pseudo Boaki Actu a été modifié vers : " + Users[i].boakiActu + "\nUn lien est désormais disponible vers votre profil Boaki Actu. Si le lien est incorrect, vérifiez que le pseudo saisi est bien identique à celui de votre profil Boaki Actu.");
 										break;
 									default:
 										message.reply("Les informations modifiables sont : boaki, wiloki et boakiActu");
 										break;
 								}
-							}
-							else {
-								check = true;
 								i = 150;
 							}
-						}jsonUsers = JSON.stringify(Users, null, 4);
-						channelUsers.send(jsonUsers);
-						if (check = true) {
+						}
+						if (check === true) {
 							jsonUsers = JSON.stringify(Users, null, 4);
 							channelUsers.send(jsonUsers);
 						}						
