@@ -235,7 +235,7 @@ bot.on("message", function (message) {
 	if (message.guild !== null) {
 		let devBot = message.guild.channels.get("399534429577543680");
 		if (message.author.id === "399489474205319179") {
-			if (message.channel.id !== "465499769020874753" && message.channel.id !== "465154316639010856" && message.channel.id !== "465153382231834625" && message.channel.id !== "464047656013135882" && message.channel.id !== "471230696539553792" && message.channel.id !== "468689435928690688" && message.channel.id !== "469413510518931456" && message.channel.id !== "469413529552683008" && message.channel.id !== "469413544690057227" && message.channel.id !== "469413561001705475" && message.channel.id !== "469413576839528458" && message.channel.id !== "469413592467505173" && message.channel.id !== "469413606685933578" && message.channel.id !== "469413620237729794") {
+			if (message.channel.id !== "465499769020874753" && message.channel.id !== "465154316639010856" && message.channel.id !== "465153382231834625" && message.channel.id !== "464047656013135882" && message.channel.id !== "468689435928690688" && message.channel.id !== "469413510518931456" && message.channel.id !== "469413529552683008" && message.channel.id !== "469413544690057227" && message.channel.id !== "469413561001705475" && message.channel.id !== "469413576839528458" && message.channel.id !== "469413592467505173" && message.channel.id !== "469413606685933578" && message.channel.id !== "469413620237729794") {
 				log("botMessage", message.member, message);
 				if (pinMessage) {
 					message.pin();
@@ -244,7 +244,7 @@ bot.on("message", function (message) {
 			}
 		}
 		else {
-			if (message.channel.id !== "465499769020874753" && message.channel.id !== "465154316639010856" && message.channel.id !== "465153382231834625" && message.channel.id !== "464047656013135882" && message.channel.id !== "471230696539553792" && message.channel.id !== "468689435928690688" && message.channel.id !== "469413510518931456" && message.channel.id !== "469413529552683008" && message.channel.id !== "469413544690057227" && message.channel.id !== "469413561001705475" && message.channel.id !== "469413576839528458" && message.channel.id !== "469413592467505173" && message.channel.id !== "469413606685933578" && message.channel.id !== "469413620237729794") {
+			if (message.channel.id !== "465499769020874753" && message.channel.id !== "465154316639010856" && message.channel.id !== "465153382231834625" && message.channel.id !== "464047656013135882" && message.channel.id !== "468689435928690688" && message.channel.id !== "469413510518931456" && message.channel.id !== "469413529552683008" && message.channel.id !== "469413544690057227" && message.channel.id !== "469413561001705475" && message.channel.id !== "469413576839528458" && message.channel.id !== "469413592467505173" && message.channel.id !== "469413606685933578" && message.channel.id !== "469413620237729794") {
 				log("message", message.member, message);
 			}			
 		}	
@@ -584,40 +584,36 @@ bot.on("message", function (message) {
 			if (args[0] === "edit") {
 				pass = true;
 			}
-			let argsSave3 = args[1];
-			let argsSave = args;
-			argsSave.shift();
-			let argsSave2 = argsSave;
-			argsSave2.shift();
-			argsSave2 = argsSave2.join(" ");
+			args2 = args;
+			args2.shift();
 			for (let i = 0; i < usersChannelsId.length; i++) {
 				let channelUsers = bot.guilds.find('id', "398872980404437013").channels.get(usersChannelsId[i]);
 				channelUsers.fetchMessage(channelUsers.lastMessageID).then(function(Users) {
 					Users = JSON.parse(Users);
-					console.log(args[0]);
-					if (args[0] === "edit" || pass == true) {
+					if (pass == true) {
 						pass = true;
-						args.shift();
 						let check = false;
-						console.log(Users);
 						for (let i = 0;i < Users.length; i++) {
 							if (Users[i].id === message.member.id) {
 								check = true;
-								switch (argsSave3.toLowerCase()) {
+								switch (args[0].toLowerCase()) {
 									case "boaki":
-										args.shift();
-										Users[i].boaki = argsSave2;
-										message.reply("Votre pseudo Boaki a été modifié vers : " + Users[i].boaki)
+										args2.shift();
+										args2 = args2.join(" ");
+										Users[i].boaki = args2;
+										message.reply("Ton pseudo Boaki a été modifié vers : " + Users[i].boaki)
 										break;
 									case "wiloki":
-										args.shift();
-										Users[i].wiloki = argsSave2;
-										message.reply("Votre pseudo Wiloki a été modifié vers : " + Users[i].wiloki)
+										args2.shift();
+										args2 = args2.join(" ");
+										Users[i].wiloki = args2;
+										message.reply("Ton pseudo Wiloki a été modifié vers : " + Users[i].wiloki)
 										break;
 									case "boakiactu":
-										args.shift();
-										Users[i].boakiActu = argsSave2;
-										message.reply("Votre pseudo Boaki Actu a été modifié vers : " + Users[i].boakiActu + "\nUn lien est désormais disponible vers votre profil Boaki Actu. Si le lien est incorrect, vérifiez que le pseudo saisi est bien identique à celui de votre profil Boaki Actu.");
+										args2.shift();
+										args2 = args2.join(" ");
+										Users[i].boakiActu = args2;
+										message.reply("Ton pseudo Boaki Actu a été modifié vers : " + Users[i].boakiActu + "\nUn lien est désormais disponible vers votre ton Boaki Actu. Si le lien est incorrect, vérifie que le pseudo saisi est bien identique à celui de ton profil Boaki Actu.");
 										break;
 									default:
 										message.reply("Les informations modifiables sont : boaki, wiloki et boakiActu");
@@ -750,6 +746,10 @@ bot.on("message", function (message) {
 					embedReport.setThumbnail(url=message.mentions.users.first().avatarURL);
 					embedReport.description = "Membre : " + message.mentions.members.first() + "\nDate : " + date + "\nRaison : " + args.join(" ") + "\nAuteur : " + message.member;
 					devBot.send(message.guild.roles.get("398874109930635297"), {embed: embedReport});
+					message.member.createDM().then(function (channel) {
+		    			let msg = "Ton report à bien été envoyé";
+		    			return channel.send(msg);
+		    		});
 				}
 				else {
 					message.member.createDM().then(function (channel) {
