@@ -747,7 +747,7 @@ bot.on("message", function (message) {
 					embedReport.description = "Membre : " + message.mentions.members.first() + "\nDate : " + date + "\nRaison : " + args.join(" ") + "\nAuteur : " + message.member;
 					devBot.send(message.guild.roles.get("398874109930635297"), {embed: embedReport});
 					message.member.createDM().then(function (channel) {
-		    			let msg = "Ton report à bien été envoyé";
+		    			let msg = "Ton report à bien été envoyé, merci !";
 		    			return channel.send(msg);
 		    		});
 				}
