@@ -287,6 +287,27 @@ bot.on("message", function (message) {
 				devBot.send(message.author + ", Synthaxe : !log <arg>");
 			}
 		}
+		else if (message.content.startsWith("!close") && admin(message.member)) {
+			message.delete();
+			let args = message.content.split(" ");
+			args.shift();
+			if (args[0] === "true") {
+				message.channel.overwritePermissions(message.guild.roles.get("398872980404437013"), {
+					SEND_MESSAGES: false
+				});
+				message.guild.send("L'écriture a été désactivé dans ce channel");
+			}
+			else if (args[0] === "false") {
+				message.channel.overwritePermissions(message.guild.roles.get("398872980404437013"), {
+					SEND_MESSAGES: true
+				});
+				message.guild.send("L'écriture a été réactivé dans ce channel");
+			}
+			else {
+				devBot.send(message.author + ", Synthaxe : !log <arg>");
+			}
+			
+		}
 		else if (message.content.startsWith("!say") && admin(message.member)) {
 			message.delete();
 			let args = message.content.split(" ");
