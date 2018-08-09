@@ -295,13 +295,13 @@ bot.on("message", function (message) {
 				message.channel.overwritePermissions(message.guild.roles.get("398872980404437013"), {
 					SEND_MESSAGES: false
 				});
-				message.guild.send("L'écriture a été désactivé dans ce channel");
+				message.channel.send("L'écriture a été désactivé dans ce channel");
 			}
 			else if (args[0] === "false") {
 				message.channel.overwritePermissions(message.guild.roles.get("398872980404437013"), {
 					SEND_MESSAGES: true
 				});
-				message.guild.send("L'écriture a été réactivé dans ce channel");
+				message.channel.send("L'écriture a été réactivé dans ce channel");
 			}
 			else {
 				devBot.send(message.author + ", Synthaxe : !log <arg>");
