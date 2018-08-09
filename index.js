@@ -259,7 +259,7 @@ bot.on("message", function (message) {
 			else {
 				message.member.createDM().then(function (channel) {
 					bot.fetchUser("178165057102938112").then(function(user) {
-		    			cmds += "\nPour plus d'informations concernant son développement, contacter " + user + ".\n\n:small_blue_diamond:Profils :\n\n	Il est possible de voir le profil d'un membre avec la commande '!profil @membre'.\n	Il est possible de compléter ton profil avec ton pseudo Boaki, Wiloki, et Boaki Actu.\n	Par exemple, si tu veux ajouter ton pseudo Wiloki, utilise la commande '!profil edit Wiloki pseudo'.\n   Les noms modifiables sont 'boaki', 'wiloki' et 'boakiactu'\n\n:small_blue_diamond: Si tu vois un membre qui ne respectes pas les règles, tu peux également le signaler avec la commande '!report pseudo raison'.\n\n\nCe bot facilite également la gestion du discord et la modération.";
+		    			cmds += "\nPour plus d'informations concernant son développement, contacter " + user + ".\n\n:small_blue_diamond:Profils :\n\n	Il est possible de voir le profil d'un membre avec la commande '!profil @membre'.\n	Il est possible de compléter ton profil avec ton pseudo Boaki, Wiloki, et Boaki Actu.\n	Par exemple, si tu veux ajouter ton pseudo Wiloki, utilise la commande '!profil edit Wiloki pseudo'.\n    Les noms modifiables sont 'boaki', 'wiloki' et 'boakiactu'\n\n:small_blue_diamond: Si tu vois un membre qui ne respectes pas les règles, tu peux également le signaler avec la commande '!report pseudo raison'.\n\n\nCe bot facilite également la gestion du discord et la modération.";
 		    			return channel.send(cmds);
 		    		});
 				});
