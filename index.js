@@ -1,7 +1,7 @@
 // PRODUCTION by FrelonMCR2#4988
 // 2018
 
-const Discord = require("discord.js");
+//const Discord = require("discord.js");
 const bot = new Discord.Client();
 const fs = require("fs");
 var currentGame = 0;
